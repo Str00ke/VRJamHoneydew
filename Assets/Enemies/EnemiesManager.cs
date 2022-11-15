@@ -12,6 +12,7 @@ public class EnemiesManager : MonoBehaviour
     [SerializeField] private LevelData levelData;
     private float _currTime;
     private int _currX;
+    private int _currDisplace = 1; //Start moving right
 
     private Transform _zone;
 
@@ -34,7 +35,7 @@ public class EnemiesManager : MonoBehaviour
 
     void Update()
     {
-        _currTime -= Time.deltaTime;
+        _currTime -= Time.deltaTime * levelData.BaseSpeed;
         if (_currTime <= 0)
         {
             Move();
@@ -56,14 +57,29 @@ public class EnemiesManager : MonoBehaviour
 
     void Move()
     {
+        _currX += _currDisplace;
+        Debug.Log(_currX);
+        bool pass = false; //This is shit
         for (int i = 0; i < _enemiesHolder.childCount; i++)
         {
-            //Might do move before check, or after...
-            //Move
+            Vector3 pos = _enemiesHolder.GetChild(i).transform.position;
+            
             if (_currX > levelData.MaxMoveFromCenter || _currX < -levelData.MaxMoveFromCenter)
             {
                 //descend
+                pass = true;
+                pos.y -= levelData.YOffset;
+                _enemiesHolder.GetChild(i).transform.position = pos;
+               
+            }
+            else
+            {
+                //Move horizontally
+                pos.x += levelData.XOffset * _currDisplace;
+                _enemiesHolder.GetChild(i).transform.position = pos;
             }
         }
+        if (pass)
+            _currDisplace *= -1;
     }
 }
