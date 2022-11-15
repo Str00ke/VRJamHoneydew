@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    #region Variables
+    [SerializeField]
+    float movespeed;
+
     [HideInInspector]
     public string m_ownerTag;
-
-    float movespeed;
+    #endregion
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -32,7 +35,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(transform.position + movespeed * Time.deltaTime * transform.forward);
+        transform.Translate(movespeed * Time.deltaTime * transform.up);
     }
 
     void Explode()

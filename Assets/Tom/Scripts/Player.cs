@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    #region Variables
     [SerializeField]
     float m_movementSpeed;
+    [SerializeField]
+    float _shootCooldown;
 
     [SerializeField]
     GameObject m_bulletPrefab;
-
     [SerializeField]
-    float m_bulletSpawnDistance;
+    Transform m_bulletSpawnPoint;
+
+    bool _canShoot = true;
 
     GameManager _gameManager;
+    #endregion
 
     void Start()
     {
@@ -22,19 +27,27 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow) && !Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
         {
-            Move(new Vector2(-1, 0));
+            Move(-transform.right);
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) && !Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
         {
-            Move(new Vector2(1, 0));
+            Move(transform.right);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            Shoot();
+            if (_canShoot)
+            {
+                Debug.Log("Ha!");
+                Shoot();
+            }
+            else
+            {
+                //Shoot CD feedback;
+            }
         }
     }
 
@@ -45,8 +58,21 @@ public class Player : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(m_bulletPrefab, transform.position + transform.forward * m_bulletSpawnDistance, transform.rotation);
+        GameObject bullet = Instantiate(m_bulletPrefab, m_bulletSpawnPoint.position, m_bulletSpawnPoint.rotation);
         bullet.GetComponent<Bullet>().m_ownerTag = gameObject.tag;
+        StartCoroutine(IShootCoolDown());
+    }
+
+    IEnumerator IShootCoolDown()
+    {
+        _canShoot = false;
+
+        for(float f = 0; f < _shootCooldown; f += Time.deltaTime)
+        {
+            yield return null;
+        }
+
+        _canShoot = true;
     }
 
     public void OnHit()
