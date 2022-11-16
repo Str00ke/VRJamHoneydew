@@ -41,7 +41,6 @@ public class Player : MonoBehaviour
         {
             if (_canShoot)
             {
-                Debug.Log("Ha!");
                 Shoot();
             }
             else
