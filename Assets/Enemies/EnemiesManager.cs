@@ -58,7 +58,6 @@ public class EnemiesManager : MonoBehaviour
     void Move()
     {
         _currX += _currDisplace;
-        Debug.Log(_currX);
         bool pass = false; //This is shit
         for (int i = 0; i < _enemiesHolder.childCount; i++)
         {

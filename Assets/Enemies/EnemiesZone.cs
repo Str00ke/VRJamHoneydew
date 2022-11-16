@@ -19,12 +19,17 @@ public class EnemiesZone : MonoBehaviour
     private int prevR;
     private int prevC;
     private Bounds prevB;
-    void Start()
+
+    void Awake()
     {
         prevR = rows;
         prevC = columns;
 
         zone = GetComponent<BoxCollider2D>();
+    }
+    void Start()
+    {
+        
         
     }
 
@@ -53,7 +58,7 @@ public class EnemiesZone : MonoBehaviour
                 go.transform.parent = holder.transform;
                 go.transform.position = pos;
 
-                var iconContent = EditorGUIUtility.IconContent("sv_label_1");
+                var iconContent = EditorGUIUtility.IconContent("blendKey");
                 EditorGUIUtility.SetIconForObject(go, (Texture2D)iconContent.image);
 
                 ++index;

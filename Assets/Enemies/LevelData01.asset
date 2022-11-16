@@ -16,3 +16,4 @@ MonoBehaviour:
   maxMoveFromCenter: 5
   xOffset: 1
   yOffset: 1
+  baseSpeed: 1
