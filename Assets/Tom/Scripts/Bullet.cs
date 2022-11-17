@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
                     break;
 
                 case "Enemy":
-                    //Enemy Hit Func
+                    colObj.GetComponent<Enemy>().OnHit();
                     break;
             }
 

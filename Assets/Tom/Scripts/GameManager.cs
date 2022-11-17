@@ -14,16 +14,17 @@ public class GameManager : MonoBehaviour
 
     [Header("Enemy Variables")]
     [SerializeField]
-    GameObject m_enemyPrefab;
+    EnemiesManager m_enemiesManager;
 
+    [Header("Level")]
     [SerializeField]
-    AnimationCurve m_enemySpeedByEnemyNumbers;
+    LevelData m_levelData;
 
     int _playerCurLives;
 
-    int _enemyNb;
-    int _enemyCurNb;
-    float _enemySpeed;
+    int _enemiesNb;
+    int _enemiesCurNb;
+    float _enemiesSpeed;
 
     static GameManager instance;
     #endregion
@@ -47,22 +48,20 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-    }
-
-    private void Update()
-    {
+        m_enemiesManager.Init(m_levelData);
+        _enemiesNb = m_enemiesManager.EnemiesNb;
     }
 
     public void EnemyKilled()
     {
-        _enemyCurNb--;
+        _enemiesCurNb--;
 
-        if(_enemyCurNb == 0)
+        if(_enemiesCurNb == 0)
         {
             Victory();
         }
 
-        _enemySpeed = m_enemySpeedByEnemyNumbers.Evaluate(1 -_enemyCurNb/_enemyNb);
+        m_enemiesManager.SpeedMultiplyer = m_levelData.SpeedByNumbers.Evaluate(1 -_enemiesCurNb/_enemiesNb);
     }
 
     public void PlayerHit()

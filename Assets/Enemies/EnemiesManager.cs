@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,10 +10,11 @@ public class EnemiesManager : MonoBehaviour
     [SerializeField] private GameObject[] enemiesPool; //For random gen (for now)
 
     //TODO: Move this, this has nothing to do here.
-    [SerializeField] private LevelData levelData;
+    private LevelData _levelData;
     private float _currTime;
     private int _currX;
     private int _currDisplace = 1; //Start moving right
+    private float _speedMultiplyer = 1;
 
     private Transform _zone;
 
@@ -20,30 +22,34 @@ public class EnemiesManager : MonoBehaviour
 
     public Transform EnemiesHolder => _enemiesHolder;
 
+    public float SpeedMultiplyer
+    {
+        get { return _speedMultiplyer; }
+        set { _speedMultiplyer = value; }
+    }
+
+    public int EnemiesNb
+    {
+        get { return enemiesPool.Length; }
+    }
+
     void Awake()
     {
         GameObject hold = new GameObject("EnemiesHolder");
         _enemiesHolder = hold.transform;
     }
-    
-    void Start()
-    {
-        Init();
-
-        _currTime = levelData.TimeBtwMoves;
-    }
 
     void Update()
     {
-        _currTime -= Time.deltaTime * levelData.BaseSpeed;
+        _currTime -= Time.deltaTime * _levelData.BaseSpeed * _speedMultiplyer;
         if (_currTime <= 0)
         {
             Move();
-            _currTime = levelData.TimeBtwMoves;
+            _currTime = _levelData.TimeBtwMoves;
         }
     }
 
-    public void Init()
+    public void Init(LevelData levelData)
     {
         _zone = zone.Holder.transform;
         for (int i = 0; i < _zone.childCount; i++)
@@ -53,6 +59,9 @@ public class EnemiesManager : MonoBehaviour
             enemy.transform.parent = _enemiesHolder;
             enemy.transform.position = _zone.GetChild(i).position;
         }
+
+        _levelData = levelData;
+        _currTime = _levelData.TimeBtwMoves;
     }
 
     void Move()
@@ -64,18 +73,18 @@ public class EnemiesManager : MonoBehaviour
         {
             Vector3 pos = _enemiesHolder.GetChild(i).transform.position;
             
-            if (_currX > levelData.MaxMoveFromCenter || _currX < -levelData.MaxMoveFromCenter)
+            if (_currX > _levelData.MaxMoveFromCenter || _currX < -_levelData.MaxMoveFromCenter)
             {
                 //descend
                 pass = true;
-                pos.y -= levelData.YOffset;
+                pos.y -= _levelData.YOffset;
                 _enemiesHolder.GetChild(i).transform.position = pos;
                
             }
             else
             {
                 //Move horizontally
-                pos.x += levelData.XOffset * _currDisplace;
+                pos.x += _levelData.XOffset * _currDisplace;
                 _enemiesHolder.GetChild(i).transform.position = pos;
             }
         }
