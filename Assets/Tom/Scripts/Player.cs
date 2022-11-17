@@ -18,11 +18,16 @@ public class Player : MonoBehaviour
     bool _canShoot = true;
 
     GameManager _gameManager;
+
+    private Camera cam;
+    private ScreenShake shake;
     #endregion
 
     void Start()
     {
         _gameManager = GameManager.Instance;
+        cam = Camera.main;
+        shake = cam.transform.GetComponent<ScreenShake>();
     }
 
     void Update()
@@ -60,6 +65,7 @@ public class Player : MonoBehaviour
         GameObject bullet = Instantiate(m_bulletPrefab, m_bulletSpawnPoint.position, m_bulletSpawnPoint.rotation);
         bullet.GetComponent<Bullet>().m_ownerTag = gameObject.tag;
         StartCoroutine(IShootCoolDown());
+        shake.Shake(0.1f, 0.5f, AxisRestriction.XY, 0.15f);
     }
 
     IEnumerator IShootCoolDown()
