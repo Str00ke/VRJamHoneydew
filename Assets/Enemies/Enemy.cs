@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Xsl;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,10 +8,19 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private EnemyData _data;
+    [SerializeField] private GameObject bulletPrefab;
 
     public static System.Action onKill;
 
     private int life;
+
+    private float _currShootTime;
+
+    [HideInInspector]
+    public bool Shooter { get; set; }
+
+    public bool DeathPending { get; private set; }
+
     void Awake()
     {
         if (!TryGetComponent<SpriteRenderer>(out SpriteRenderer s))
@@ -20,11 +30,19 @@ public class Enemy : MonoBehaviour
         }
 
         life = _data.LifePoints;
+
+        SetShootRandomTime();
     }
     void Start()
     {
         
         
+    }
+
+    void SetShootRandomTime()
+    {
+        _currShootTime = Random.Range(_data.ShootTimeMin, _data.ShootTimeMax);
+
     }
 
     /*
@@ -36,13 +54,29 @@ public class Enemy : MonoBehaviour
     }
     */
 
+    void Update()
+    {
+        if (Shooter)
+        {
+            _currShootTime -= Time.deltaTime;
+            if (_currShootTime <= 0)
+            {
+                Shoot();
+                SetShootRandomTime();
+            }
+        }
+    }
     public void Hit()
     {
         life--;
         if (life <= 0)
         {
             Destroy(gameObject);
-            onKill?.Invoke();
+            DeathPending = true;
+            //onKill?.Invoke();
+            //Debug.Break();
+            FindObjectOfType<GameManager>().OnEnemyKilled();
+            FindObjectOfType<EnemiesManager>().OnEnemyKilled();
         }
 
     }
@@ -66,9 +100,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void Shoot()
     {
-        
+        GameObject go = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        //go.transform.Rotate(go.transform.position, 180f);
+        //go.tag = "Enemy";
+        go.GetComponent<Bullet>().m_ownerTag = gameObject.tag;
+
+        go.GetComponent<Bullet>().Direction = -Vector2.up;
     }
 }

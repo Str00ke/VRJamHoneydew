@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class EnemiesManager : MonoBehaviour
@@ -20,6 +21,7 @@ public class EnemiesManager : MonoBehaviour
 
     public Transform EnemiesHolder => _enemiesHolder;
 
+
     void Awake()
     {
         GameObject hold = new GameObject("EnemiesHolder");
@@ -29,8 +31,11 @@ public class EnemiesManager : MonoBehaviour
     void Start()
     {
         Init();
+        SetShooters();
 
         _currTime = levelData.TimeBtwMoves;
+        Enemy.onKill += OnEnemyKilled;
+
     }
 
     void Update()
@@ -81,5 +86,45 @@ public class EnemiesManager : MonoBehaviour
         }
         if (pass)
             _currDisplace *= -1;
+    }
+
+    public void SetShooters()
+    {
+        Debug.Log("test");
+        List<Enemy> shooters = new List<Enemy>();
+
+        float minY = 999;
+        for (int i = 0; i < _enemiesHolder.childCount; i++)
+        {
+            if (!_enemiesHolder.GetChild(i).GetComponent<Enemy>().DeathPending)
+            {
+                _enemiesHolder.GetChild(i).GetComponent<Enemy>().Shooter = false;
+                if (_enemiesHolder.GetChild(i).position.y < minY)
+                {
+                    minY = _enemiesHolder.GetChild(i).position.y;
+                    shooters.Clear();
+                    shooters.Add(_enemiesHolder.GetChild(i).GetComponent<Enemy>());
+
+                }
+                else if (_enemiesHolder.GetChild(i).position.y == minY)
+                    shooters.Add(_enemiesHolder.GetChild(i).GetComponent<Enemy>());
+            }
+        }
+
+        //Debug.Log("=============");
+
+        foreach (Enemy e in shooters)
+        {
+            //Debug.Log(e.gameObject.name);
+            e.Shooter = true;
+        }
+
+        //Debug.Log("=============");
+
+    }
+
+    public void OnEnemyKilled()
+    {
+        SetShooters();
     }
 }

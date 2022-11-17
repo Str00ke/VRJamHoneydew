@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(m_bulletPrefab, m_bulletSpawnPoint.position, m_bulletSpawnPoint.rotation);
+        GameObject bullet = Instantiate(m_bulletPrefab, m_bulletSpawnPoint.position, Quaternion.identity);
         bullet.GetComponent<Bullet>().m_ownerTag = gameObject.tag;
         StartCoroutine(IShootCoolDown());
         shake.Shake(0.1f, 0.5f, AxisRestriction.XY, 0.15f);
