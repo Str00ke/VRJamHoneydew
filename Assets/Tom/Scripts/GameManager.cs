@@ -14,17 +14,19 @@ public class GameManager : MonoBehaviour
 
     [Header("Enemy Variables")]
     [SerializeField]
-    EnemiesManager m_enemiesManager;
+    GameObject m_enemyPrefab;
 
-    [Header("Level")]
     [SerializeField]
-    LevelData m_levelData;
+    AnimationCurve m_enemySpeedByEnemyNumbers;
+
+    private EnemiesManager eManager;
+    private Transform enemiesHolder;
 
     int _playerCurLives;
 
-    int _enemiesNb;
-    int _enemiesCurNb;
-    float _enemiesSpeed;
+    int _enemyNb;
+    int _enemyCurNb;
+    float _enemySpeed;
 
     static GameManager instance;
     #endregion
@@ -48,20 +50,34 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        m_enemiesManager.Init(m_levelData);
-        _enemiesNb = m_enemiesManager.EnemiesNb;
+        Enemy.onKill += OnEnemyKilled;
+
+        eManager = FindObjectOfType<EnemiesManager>();
+        enemiesHolder = eManager.EnemiesHolder;
+
+        _enemyCurNb = enemiesHolder.childCount;
     }
 
-    public void EnemyKilled()
+    void OnDisable()
     {
-        _enemiesCurNb--;
 
-        if(_enemiesCurNb == 0)
+    }
+
+    private void Update()
+    {
+
+    }
+
+    public void OnEnemyKilled()
+    {
+        _enemyCurNb--;
+        //Debug.Log(enemiesHolder.childCount);
+        if(enemiesHolder.childCount == 1) //Don't know yet why it does not goes to zero.
         {
             Victory();
         }
 
-        m_enemiesManager.SpeedMultiplyer = m_levelData.SpeedByNumbers.Evaluate(1 -_enemiesCurNb/_enemiesNb);
+        //_enemySpeed = m_enemySpeedByEnemyNumbers.Evaluate(1 -_enemyCurNb/_enemyNb);
     }
 
     public void PlayerHit()

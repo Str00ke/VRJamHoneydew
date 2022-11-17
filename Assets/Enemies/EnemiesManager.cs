@@ -52,6 +52,7 @@ public class EnemiesManager : MonoBehaviour
     public void Init(LevelData levelData)
     {
         _zone = zone.Holder.transform;
+        _zone.transform.position = transform.position;
         for (int i = 0; i < _zone.childCount; i++)
         {
             int rnd = Random.Range(0, enemiesPool.Length);
@@ -67,7 +68,6 @@ public class EnemiesManager : MonoBehaviour
     void Move()
     {
         _currX += _currDisplace;
-        Debug.Log(_currX);
         bool pass = false; //This is shit
         for (int i = 0; i < _enemiesHolder.childCount; i++)
         {

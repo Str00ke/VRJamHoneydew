@@ -19,17 +19,34 @@ public class EnemiesZone : MonoBehaviour
     private int prevR;
     private int prevC;
     private Bounds prevB;
-    void Start()
+
+    void Awake()
     {
         prevR = rows;
         prevC = columns;
 
         zone = GetComponent<BoxCollider2D>();
+    }
+    void Start()
+    {
         
+        
+    }
+
+    public void Enable()
+    {
+        holder.gameObject.SetActive(true);
+        Refresh();
+    }
+
+    public void Disable()
+    {
+        holder.gameObject.SetActive(false);
     }
 
     void Refresh()
     {
+        zone = GetComponent<BoxCollider2D>();
         prevC = columns;
         prevR = rows;
         prevB = zone.bounds;
@@ -53,7 +70,7 @@ public class EnemiesZone : MonoBehaviour
                 go.transform.parent = holder.transform;
                 go.transform.position = pos;
 
-                var iconContent = EditorGUIUtility.IconContent("sv_label_1");
+                var iconContent = EditorGUIUtility.IconContent("blendKey");
                 EditorGUIUtility.SetIconForObject(go, (Texture2D)iconContent.image);
 
                 ++index;
