@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     AnimationCurve m_enemySpeedByEnemyNumbers;
 
+    private EnemiesManager eManager;
+    private Transform enemiesHolder;
+
     int _playerCurLives;
 
     int _enemyNb;
@@ -47,22 +50,34 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Enemy.onKill += OnEnemyKilled;
+
+        eManager = FindObjectOfType<EnemiesManager>();
+        enemiesHolder = eManager.EnemiesHolder;
+
+        _enemyCurNb = enemiesHolder.childCount;
+    }
+
+    void OnDisable()
+    {
+
     }
 
     private void Update()
     {
+
     }
 
-    public void EnemyKilled()
+    public void OnEnemyKilled()
     {
         _enemyCurNb--;
-
-        if(_enemyCurNb == 0)
+        //Debug.Log(enemiesHolder.childCount);
+        if(enemiesHolder.childCount == 1) //Don't know yet why it does not goes to zero.
         {
             Victory();
         }
 
-        _enemySpeed = m_enemySpeedByEnemyNumbers.Evaluate(1 -_enemyCurNb/_enemyNb);
+        //_enemySpeed = m_enemySpeedByEnemyNumbers.Evaluate(1 -_enemyCurNb/_enemyNb);
     }
 
     public void PlayerHit()

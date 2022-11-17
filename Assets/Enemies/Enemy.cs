@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -7,6 +8,9 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private EnemyData _data;
 
+    public static System.Action onKill;
+
+    private int life;
     void Awake()
     {
         if (!TryGetComponent<SpriteRenderer>(out SpriteRenderer s))
@@ -14,11 +18,33 @@ public class Enemy : MonoBehaviour
             SpriteRenderer spr = gameObject.AddComponent<SpriteRenderer>();
             spr.sprite = _data.Sprite;
         }
+
+        life = _data.LifePoints;
     }
     void Start()
     {
         
         
+    }
+
+    /*
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        life--;
+        if (life <= 0)
+            Destroy(gameObject);
+    }
+    */
+
+    public void Hit()
+    {
+        life--;
+        if (life <= 0)
+        {
+            Destroy(gameObject);
+            onKill?.Invoke();
+        }
+
     }
 
     public void DisableComponents()

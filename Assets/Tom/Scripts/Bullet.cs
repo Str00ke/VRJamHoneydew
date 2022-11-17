@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
                     break;
 
                 case "Enemy":
-                    //Enemy Hit Func
+                    colObj.gameObject.GetComponent<Enemy>().Hit();
                     break;
             }
 
@@ -33,6 +33,10 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    void OnBecameInvisible()
+    {
+        //Destroy(gameObject);
+    }
     void Update()
     {
         transform.Translate(movespeed * Time.deltaTime * transform.up);
