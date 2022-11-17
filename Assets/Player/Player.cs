@@ -5,15 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     #region Variables
-    [SerializeField]
-    float m_movementSpeed;
-    [SerializeField]
-    float _shootCooldown;
+    [SerializeField] float m_movementSpeed;
+    [SerializeField] private float dividedSpeed;
+    [SerializeField] float _shootCooldown;
 
-    [SerializeField]
-    GameObject m_bulletPrefab;
-    [SerializeField]
-    Transform m_bulletSpawnPoint;
+    [SerializeField] GameObject m_bulletPrefab;
+    [SerializeField] Transform m_bulletSpawnPoint;
 
     bool _canShoot = true;
 
@@ -85,7 +82,8 @@ public class Player : MonoBehaviour
 
     void Move(Vector2 Dir)
     {
-        gameObject.transform.Translate(Dir * m_movementSpeed * Time.deltaTime);
+        if(isCharging || isCharging2) gameObject.transform.Translate(Dir * (m_movementSpeed * dividedSpeed) * Time.deltaTime);
+        else gameObject.transform.Translate(Dir * m_movementSpeed * Time.deltaTime);
     }
 
     void Shoot()
