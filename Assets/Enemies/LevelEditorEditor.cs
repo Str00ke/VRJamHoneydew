@@ -14,6 +14,8 @@ public class LevelEditorEditor : Editor
 
     private int indexSelect = 0;
 
+    private static bool isEnable;
+
     void OnEnable()
     {
         list = serializedObject.FindProperty("enemiesList");
@@ -25,8 +27,32 @@ public class LevelEditorEditor : Editor
     {
         serializedObject.Update();
 
-        base.OnInspectorGUI();
 
+        if (isEnable)
+        {
+            if (GUILayout.Button("Disable"))
+            {
+                isEnable = false;
+                FindObjectOfType<LevelEditor>().IO(isEnable);
+            }
+        }
+        else
+        {
+            if (GUILayout.Button("Enable"))
+            {
+                isEnable = true;
+                FindObjectOfType<LevelEditor>().IO(isEnable);
+            }
+            else
+            {
+                serializedObject.ApplyModifiedProperties();
+                return;
+            }
+        }
+        EditorGUILayout.Space(30);
+
+
+        base.OnInspectorGUI();
        
         EditorGUILayout.BeginVertical();
         for (int i = 0; i < list.arraySize; i++)

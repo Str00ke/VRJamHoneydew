@@ -33,22 +33,26 @@ public class MouseEditor : MonoBehaviour, IPointerDownHandler
 
     private Vector2 _prevMousePos;
 
+    private LevelEditor editor;
     ///GUIContent iconContent = EditorGUIUtility.IconContent("sv_label_1");
     ///GUIContent iconContent2 = EditorGUIUtility.IconContent("sv_label_2");
 
 
     void Awake()
     {
+
         if (instance != null && instance != this)
-            Destroy(gameObject);    // Suppression d'une instance précédente (sécurité...sécurité...)
+            Destroy(gameObject);    
 
         instance = this;
     }
     void Start()
     {
-       FetchHolders();
-    }
+        if (!Application.isEditor) return;
 
+        Debug.Log(Application.isEditor);
+        
+    }
 
     void OnDisable()
     {
@@ -87,6 +91,14 @@ public class MouseEditor : MonoBehaviour, IPointerDownHandler
 
     private void OnSceneGUI(SceneView sceneView)
     {
+        if (!Application.isEditor) return;
+
+        if (editor != null && !editor.Enable)
+        {
+            //if (_selected != null) DestroyImmediate(_selected);
+            return;
+        }
+
         Vector3 mousePosScreen = Event.current.mousePosition;
         //mousePosScreen.y = sceneView.camera.pixelHeight - mousePosScreen.y;
         mousePosScreen.z = -10;
@@ -123,21 +135,26 @@ public class MouseEditor : MonoBehaviour, IPointerDownHandler
 
     void Update()
     {
-        /*
-        Vector3 mousePosScreen = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -10);
-        Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(mousePosScreen);
-        if (_prevMousePos != (Vector2)mousePosWorld)
-        {
-            CheckDist(mousePosWorld);
-            _prevMousePos = mousePosWorld;
-        }
-        */
-        //Debug.Log("Update");
+        Debug.Log(Application.isPlaying);
 
-        
+        if (!Application.isEditor) return;
+
+        if (editor != null && !editor.Enable)
+        {
+            //if (_selected != null) DestroyImmediate(_selected);
+            return;
+        } 
+        else if (editor != null && editor.Enable)
+        {
+            if (_selected == null) refresh = true;
+        }
+
 
         if (refresh)
         {
+
+
+            editor = GetComponent<LevelEditor>();
             FetchHolders();
             SceneView.duringSceneGui -= OnSceneGUI;
             SceneView.duringSceneGui += OnSceneGUI;

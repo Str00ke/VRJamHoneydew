@@ -9,6 +9,9 @@ using UnityEngine;
 public class LevelEditor : MonoBehaviour
 {
 
+    private bool _enable;
+    public bool Enable { get => _enable; private set { _enable = value; } }
+
     private GameObject _enemySelected;
 
     private GameObject _enemySelectInPool;
@@ -20,22 +23,18 @@ public class LevelEditor : MonoBehaviour
 
     private Vector2 pos;
 
+    [SerializeField] private EnemiesZone zone;
+
+
     void Start()
     {
         //GetComponent<MouseEditor>().onMouseClick += OnClick;
         //GetComponent<MouseEditor>().onMouseUpdate += OnUpdate;
         //GetComponent<MouseEditor>().onRefresh += OnRefresh;
+        if (!Application.isEditor) return;
 
-        CreateLevelHolder();
-
-        if (enemiesList.Count > 0)
-        {
-            if (_enemySelectInPool == null) _enemySelectInPool = enemiesList[0];
-            GameObject go = Instantiate(_enemySelectInPool);
-            go.GetComponent<SpriteRenderer>().sortingOrder = 1;
-            _enemySelected = go;
-        }
     }
+
 
     void OnDisable()
     {
@@ -46,8 +45,28 @@ public class LevelEditor : MonoBehaviour
 
     void Update()
     {
-        
     }
+
+    public void IO(bool enable)
+    {
+
+        _enable = enable;
+        if (!enable)
+        {
+            Clear();
+            DestroyImmediate(levelHolder);
+            //if (_enemySelected != null) DestroyImmediate(_enemySelected);
+            FindObjectOfType<EnemiesZone>().Disable();
+            zone.gameObject.SetActive(false);
+        }
+        else
+        {
+            CreateLevelHolder();
+            zone.gameObject.SetActive(true);
+            FindObjectOfType<EnemiesZone>().Enable();
+        }
+    }
+
 
     void CreateLevelHolder()
     {
@@ -95,7 +114,7 @@ public class LevelEditor : MonoBehaviour
         }
     }
 
-    public void Erase(GameObject obj)
+    void Erase(GameObject obj)
     {
         DestroyImmediate(obj);
     }
@@ -150,13 +169,18 @@ public class LevelEditor : MonoBehaviour
 
     public void OnRefresh()
     {
+
+        CreateLevelHolder();
+
         //GetComponent<MouseEditor>().onMouseClick += OnClick;
         //GetComponent<MouseEditor>().onMouseUpdate += OnUpdate;
         //GetComponent<MouseEditor>().onRefresh += OnRefresh;
-        DestroyImmediate(_enemySelected);
+        if (_enemySelected != null) DestroyImmediate(_enemySelected);
         if (enemiesList.Count > 0)
         {
-            GameObject go = Instantiate(enemiesList[0]);
+            GameObject go;
+            if (_enemySelectInPool == null) go = Instantiate(enemiesList[0]);
+            else go = Instantiate(_enemySelectInPool);
             go.GetComponent<SpriteRenderer>().sortingOrder = 1;
 
             _enemySelected = go;

@@ -33,8 +33,20 @@ public class EnemiesZone : MonoBehaviour
         
     }
 
+    public void Enable()
+    {
+        holder.gameObject.SetActive(true);
+        Refresh();
+    }
+
+    public void Disable()
+    {
+        holder.gameObject.SetActive(false);
+    }
+
     void Refresh()
     {
+        zone = GetComponent<BoxCollider2D>();
         prevC = columns;
         prevR = rows;
         prevB = zone.bounds;

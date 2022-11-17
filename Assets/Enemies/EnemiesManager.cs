@@ -46,6 +46,7 @@ public class EnemiesManager : MonoBehaviour
     public void Init()
     {
         _zone = zone.Holder.transform;
+        _zone.transform.position = transform.position;
         for (int i = 0; i < _zone.childCount; i++)
         {
             int rnd = Random.Range(0, enemiesPool.Length);
