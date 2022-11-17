@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5122518797612733625}
   - component: {fileID: 3221184003688239017}
   m_Layer: 6
-  m_Name: BulletWHP
+  m_Name: BulletWHP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movespeed: 25
   m_ownerTag: 
-  maxHP: 2
+  maxHP: 1
 --- !u!212 &7415390574750882118
 SpriteRenderer:
   m_ObjectHideFlags: 0
