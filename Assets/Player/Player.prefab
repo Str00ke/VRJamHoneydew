@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 663105401792320527}
-  - component: {fileID: 663105401792320512}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,31 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &663105401792320512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 663105401792320513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 494aa62bf02df394283a6781463a69d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_movementSpeed: 5
-  dividedSpeed: 0.5
-  _shootCooldown: 1
-  m_bulletPrefab: {fileID: 1714887226253765373, guid: 670b3c5f98b8928449073db933b14afa,
-    type: 3}
-  m_bulletPrefabWParticules: {fileID: 8618449135393876617, guid: 50932e95b74c39d44a4581ccfb794039,
-    type: 3}
-  m_bulletSpawnPoint: {fileID: 663105403194442326}
-  timeToCharge: 2
-  minimTimeToCharge: 0.5
-  distanceBtwShot: 3
-  charge: {fileID: 3079622297486341974}
-  charged: {fileID: 1732525759167964322}
 --- !u!1 &663105403194442327
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,9 +78,10 @@ GameObject:
   - component: {fileID: 663105403359512780}
   - component: {fileID: 663105403359512781}
   - component: {fileID: 663105403359512782}
+  - component: {fileID: 4379413308444918268}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -189,6 +164,31 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4379413308444918268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663105403359512768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 494aa62bf02df394283a6781463a69d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_movementSpeed: 10
+  dividedSpeed: 0.5
+  _shootCooldown: 0.2
+  m_bulletPrefab: {fileID: 1714887226253765373, guid: 670b3c5f98b8928449073db933b14afa,
+    type: 3}
+  m_bulletPrefabWParticules: {fileID: 8618449135393876617, guid: 50932e95b74c39d44a4581ccfb794039,
+    type: 3}
+  m_bulletSpawnPoint: {fileID: 663105403194442326}
+  timeToCharge: 2
+  minimTimeToCharge: 0.5
+  distanceBtwShot: 3
+  charge: {fileID: 3079622297486341974}
+  charged: {fileID: 1732525759167964322}
 --- !u!1001 &1063071085
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -524,16 +524,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 663105401792320512, guid: 0596542e87c03b94e9312ac8a2bc4960,
-        type: 3}
-      propertyPath: _shootCooldown
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 663105401792320512, guid: 0596542e87c03b94e9312ac8a2bc4960,
-        type: 3}
-      propertyPath: m_movementSpeed
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 663105401792320513, guid: 0596542e87c03b94e9312ac8a2bc4960,
         type: 3}
       propertyPath: m_Name
@@ -2442,7 +2432,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1821460687}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2, y: 5.2, z: -0.020497508}
+  m_LocalPosition: {x: 0.2, y: 5.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2616,6 +2606,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1926944723}
   - component: {fileID: 1926944722}
+  - component: {fileID: 1926944724}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2676,6 +2667,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1926944724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926944721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c2a8f94a3fbf64694a7f9eaa9572dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1950441119
 GameObject:
   m_ObjectHideFlags: 0
