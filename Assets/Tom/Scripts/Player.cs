@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
         GameObject bullet = Instantiate(m_bulletPrefab, m_bulletSpawnPoint.position, Quaternion.identity);
         bullet.GetComponent<Bullet>().m_ownerTag = gameObject.tag;
         StartCoroutine(IShootCoolDown());
+        CameraShake.CameraShaker.Presets.ShortShake2D();
     }
 
     IEnumerator IShootCoolDown()
