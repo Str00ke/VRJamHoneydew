@@ -63,6 +63,7 @@ public class EnemiesManager : MonoBehaviour
 
     void Move()
     {
+        return;
         _currX += _currDisplace;
         bool pass = false; //This is shit
         for (int i = 0; i < _enemiesHolder.childCount; i++)
@@ -88,39 +89,35 @@ public class EnemiesManager : MonoBehaviour
             _currDisplace *= -1;
     }
 
+
     public void SetShooters()
     {
-        Debug.Log("test");
-        List<Enemy> shooters = new List<Enemy>();
-
-        float minY = 999;
+        Dictionary<float, Enemy> yLow = new Dictionary<float, Enemy>();
         for (int i = 0; i < _enemiesHolder.childCount; i++)
         {
             if (!_enemiesHolder.GetChild(i).GetComponent<Enemy>().DeathPending)
             {
                 _enemiesHolder.GetChild(i).GetComponent<Enemy>().Shooter = false;
-                if (_enemiesHolder.GetChild(i).position.y < minY)
-                {
-                    minY = _enemiesHolder.GetChild(i).position.y;
-                    shooters.Clear();
-                    shooters.Add(_enemiesHolder.GetChild(i).GetComponent<Enemy>());
 
-                }
-                else if (_enemiesHolder.GetChild(i).position.y == minY)
-                    shooters.Add(_enemiesHolder.GetChild(i).GetComponent<Enemy>());
+                float eX = _enemiesHolder.GetChild(i).transform.position.x;
+                float eY = _enemiesHolder.GetChild(i).transform.position.y;
+
+                //If there's no enemy registered for column at pos x, just add one, assuming it's the lowest
+                if (!yLow.ContainsKey(eX))
+                    yLow.Add(eX, _enemiesHolder.GetChild(i).GetComponent<Enemy>());
+
+
+                //Or else compare y of both registered and iterator
+                else if (eY < yLow[eX].transform.position.y) 
+                    yLow[eX] = _enemiesHolder.GetChild(i).GetComponent<Enemy>();
             }
         }
 
-        //Debug.Log("=============");
 
-        foreach (Enemy e in shooters)
+        foreach (Enemy e in yLow.Values)
         {
-            //Debug.Log(e.gameObject.name);
             e.Shooter = true;
         }
-
-        //Debug.Log("=============");
-
     }
 
     public void OnEnemyKilled()
