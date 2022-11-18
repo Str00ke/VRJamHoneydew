@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -10,12 +11,15 @@ public class Bullet : MonoBehaviour
 
     [HideInInspector]
     public string m_ownerTag;
+
+    private Vector2 _direction = Vector2.up;
+    public Vector2 Direction { get => _direction; set { _direction = value; } }
     #endregion
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject colObj = collision.gameObject;
-
         if (!colObj.CompareTag(m_ownerTag))
         {
             switch (colObj.tag)
@@ -39,7 +43,7 @@ public class Bullet : MonoBehaviour
     }
     void Update()
     {
-        transform.Translate(movespeed * Time.deltaTime * transform.up);
+        transform.Translate(movespeed * Time.deltaTime * _direction);
     }
 
     void Explode()

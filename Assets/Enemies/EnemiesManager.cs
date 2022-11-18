@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class EnemiesManager : MonoBehaviour
@@ -10,11 +10,10 @@ public class EnemiesManager : MonoBehaviour
     [SerializeField] private GameObject[] enemiesPool; //For random gen (for now)
 
     //TODO: Move this, this has nothing to do here.
-    private LevelData _levelData;
+    [SerializeField] private LevelData levelData;
     private float _currTime;
     private int _currX;
     private int _currDisplace = 1; //Start moving right
-    private float _speedMultiplyer = 1;
 
     private Transform _zone;
 
@@ -22,34 +21,34 @@ public class EnemiesManager : MonoBehaviour
 
     public Transform EnemiesHolder => _enemiesHolder;
 
-    public float SpeedMultiplyer
-    {
-        get { return _speedMultiplyer; }
-        set { _speedMultiplyer = value; }
-    }
-
-    public int EnemiesNb
-    {
-        get { return enemiesPool.Length; }
-    }
 
     void Awake()
     {
         GameObject hold = new GameObject("EnemiesHolder");
         _enemiesHolder = hold.transform;
     }
+    
+    void Start()
+    {
+        Init();
+        SetShooters();
+
+        _currTime = levelData.TimeBtwMoves;
+        Enemy.onKill += OnEnemyKilled;
+
+    }
 
     void Update()
     {
-        _currTime -= Time.deltaTime * _levelData.BaseSpeed * _speedMultiplyer;
+        _currTime -= Time.deltaTime * levelData.BaseSpeed;
         if (_currTime <= 0)
         {
             Move();
-            _currTime = _levelData.TimeBtwMoves;
+            _currTime = levelData.TimeBtwMoves;
         }
     }
 
-    public void Init(LevelData levelData)
+    public void Init()
     {
         _zone = zone.Holder.transform;
         _zone.transform.position = transform.position;
@@ -60,9 +59,6 @@ public class EnemiesManager : MonoBehaviour
             enemy.transform.parent = _enemiesHolder;
             enemy.transform.position = _zone.GetChild(i).position;
         }
-
-        _levelData = levelData;
-        _currTime = _levelData.TimeBtwMoves;
     }
 
     void Move()
@@ -73,22 +69,58 @@ public class EnemiesManager : MonoBehaviour
         {
             Vector3 pos = _enemiesHolder.GetChild(i).transform.position;
             
-            if (_currX > _levelData.MaxMoveFromCenter || _currX < -_levelData.MaxMoveFromCenter)
+            if (_currX > levelData.MaxMoveFromCenter || _currX < -levelData.MaxMoveFromCenter)
             {
                 //descend
                 pass = true;
-                pos.y -= _levelData.YOffset;
+                pos.y -= levelData.YOffset;
                 _enemiesHolder.GetChild(i).transform.position = pos;
                
             }
             else
             {
                 //Move horizontally
-                pos.x += _levelData.XOffset * _currDisplace;
+                pos.x += levelData.XOffset * _currDisplace;
                 _enemiesHolder.GetChild(i).transform.position = pos;
             }
         }
         if (pass)
             _currDisplace *= -1;
+    }
+
+
+    public void SetShooters()
+    {
+        Dictionary<float, Enemy> yLow = new Dictionary<float, Enemy>();
+        for (int i = 0; i < _enemiesHolder.childCount; i++)
+        {
+            if (!_enemiesHolder.GetChild(i).GetComponent<Enemy>().DeathPending)
+            {
+                _enemiesHolder.GetChild(i).GetComponent<Enemy>().Shooter = false;
+
+                float eX = _enemiesHolder.GetChild(i).transform.position.x;
+                float eY = _enemiesHolder.GetChild(i).transform.position.y;
+
+                //If there's no enemy registered for column at pos x, just add one, assuming it's the lowest
+                if (!yLow.ContainsKey(eX))
+                    yLow.Add(eX, _enemiesHolder.GetChild(i).GetComponent<Enemy>());
+
+
+                //Or else compare y of both registered and iterator
+                else if (eY < yLow[eX].transform.position.y) 
+                    yLow[eX] = _enemiesHolder.GetChild(i).GetComponent<Enemy>();
+            }
+        }
+
+
+        foreach (Enemy e in yLow.Values)
+        {
+            e.Shooter = true;
+        }
+    }
+
+    public void OnEnemyKilled()
+    {
+        SetShooters();
     }
 }
