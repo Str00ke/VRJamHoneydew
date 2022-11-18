@@ -105,8 +105,8 @@ public class Enemy : MonoBehaviour
         GameObject go = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         //go.transform.Rotate(go.transform.position, 180f);
         //go.tag = "Enemy";
-        go.GetComponent<Bullet>().m_ownerTag = gameObject.tag;
+        go.GetComponent<BulletWHP>().m_ownerTag = gameObject.tag;
 
-        go.GetComponent<Bullet>().Direction = -Vector2.up;
+        go.GetComponent<BulletWHP>().Direction = -Vector2.up;
     }
 }

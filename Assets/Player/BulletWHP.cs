@@ -10,6 +10,9 @@ public class BulletWHP : MonoBehaviour
 
     [HideInInspector]
     public string m_ownerTag;
+    
+    private Vector2 _direction = Vector2.up;
+    public Vector2 Direction { get => _direction; set { _direction = value; } }
 
     [Header("HP")]
     [SerializeField] private float maxHP;
@@ -43,7 +46,7 @@ public class BulletWHP : MonoBehaviour
     }
     void Update()
     {
-        transform.Translate(movespeed * Time.deltaTime * transform.up);
+        transform.Translate(movespeed * Time.deltaTime * _direction);
     }
 
     void HPCheck()
