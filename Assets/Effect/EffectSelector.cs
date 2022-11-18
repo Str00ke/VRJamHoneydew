@@ -10,7 +10,7 @@ public class EffectSelector : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         
-        if (Input.GetKeyDown(KeyCode.Keypad0))
+        if (Input.GetKeyDown(KeyCode.Keypad0)) // Particule / charged shot
         {
             int effect = PlayerPrefs.GetInt("Effect0");
             effect = (effect + 1) % 2;

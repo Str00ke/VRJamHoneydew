@@ -51,7 +51,9 @@ MonoBehaviour:
   m_movementSpeed: 5
   dividedSpeed: 0.5
   _shootCooldown: 1
-  m_bulletPrefab: {fileID: 8618449135393876617, guid: 50932e95b74c39d44a4581ccfb794039,
+  m_bulletPrefab: {fileID: 1714887226253765373, guid: 670b3c5f98b8928449073db933b14afa,
+    type: 3}
+  m_bulletPrefabWParticules: {fileID: 8618449135393876617, guid: 50932e95b74c39d44a4581ccfb794039,
     type: 3}
   m_bulletSpawnPoint: {fileID: 663105403194442326}
   timeToCharge: 2
