@@ -30,6 +30,9 @@ public class Player : MonoBehaviour
     
     GameManager _gameManager;
 
+    [Header("Animation")] 
+    [SerializeField] private Animator anim; 
+
     private Camera cam;
     #endregion
 
@@ -44,11 +47,22 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
         {
             Move(-transform.right);
+            anim.SetBool("IsRight", false);
+            anim.SetBool("IsLeft", true);
+            anim.SetBool("IsIdle", false);
         }
-
         if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
         {
             Move(transform.right);
+            anim.SetBool("IsRight", true);
+            anim.SetBool("IsLeft", false);
+            anim.SetBool("IsIdle", false);
+        }
+        if(!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+        {
+            anim.SetBool("IsRight",false);
+            anim.SetBool("IsLeft", false);
+            anim.SetBool("IsIdle", true);
         }
 
         if (Input.GetKey(KeyCode.Space))
