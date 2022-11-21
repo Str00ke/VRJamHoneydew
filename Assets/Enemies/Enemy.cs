@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
         if (life <= 0)
         {
             float rnd = Random.Range(0.0f, 100.0f);
-            if (rnd <= _data.ExplodeChancePercentage)
+            if (rnd <= _data.ExplodeChancePercentage[0].chanceValue) //UPDATEME
             {
                 foreach (Enemy e in FindObjectOfType<EnemiesManager>().GetEnemyAdjascent(transform.position))
                 {
