@@ -16,3 +16,4 @@ MonoBehaviour:
   _lifePoints: 0
   _shootTimeMin: 0.1
   _shootTimeMax: 2
+  _explodeChance: 100

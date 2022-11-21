@@ -10,9 +10,11 @@ public class EnemyData : ScriptableObject
     [SerializeField] private int _lifePoints;
     [SerializeField] private float _shootTimeMin;
     [SerializeField] private float _shootTimeMax;
+    [SerializeField] private float _explodeChance;
 
     public Sprite Sprite => _spr;
     public int LifePoints => _lifePoints;
     public float ShootTimeMin => _shootTimeMin;
     public float ShootTimeMax => _shootTimeMax;
+    public float ExplodeChancePercentage => _explodeChance;
 }
