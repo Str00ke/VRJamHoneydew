@@ -89,6 +89,7 @@ public class Enemy : MonoBehaviour
             //Debug.Break();
             FindObjectOfType<GameManager>().OnEnemyKilled();
             FindObjectOfType<EnemiesManager>().OnEnemyKilled();
+            FindObjectOfType<Score>().ChangeScore(100);
         }
 
     }
@@ -101,6 +102,7 @@ public class Enemy : MonoBehaviour
         //Debug.Break();
         FindObjectOfType<GameManager>().OnEnemyKilled();
         FindObjectOfType<EnemiesManager>().OnEnemyKilled();
+        FindObjectOfType<Score>().ChangeScore(100);
     }
 
     public void DisableComponents()
