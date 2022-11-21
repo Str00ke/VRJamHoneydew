@@ -20,6 +20,9 @@ public class EnemiesZone : MonoBehaviour
     private int prevC;
     private Bounds prevB;
 
+    public float offsetX { get; private set; }
+    public float offsetY { get; private set; }
+
     void Awake()
     {
         prevR = rows;
@@ -29,8 +32,7 @@ public class EnemiesZone : MonoBehaviour
     }
     void Start()
     {
-        
-        
+
     }
 
     public void Enable()
@@ -66,9 +68,10 @@ public class EnemiesZone : MonoBehaviour
         {
             for (int X = 0; X < columns; X++)
             {
-                GameObject go = new GameObject("test0" + index);
+                GameObject go = new GameObject("holder0" + index);
                 go.transform.parent = holder.transform;
                 go.transform.position = pos;
+
 
                 var iconContent = EditorGUIUtility.IconContent("blendKey");
                 EditorGUIUtility.SetIconForObject(go, (Texture2D)iconContent.image);

@@ -16,3 +16,6 @@ MonoBehaviour:
   _lifePoints: 0
   _shootTimeMin: 0.1
   _shootTimeMax: 2
+  _explodeChanceMult:
+  - comboValue: 0
+    chanceValue: 20

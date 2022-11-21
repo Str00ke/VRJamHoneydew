@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemiesManager : MonoBehaviour
 {
@@ -14,6 +17,9 @@ public class EnemiesManager : MonoBehaviour
     private float _currTime;
     private int _currX;
     private int _currDisplace = 1; //Start moving right
+
+    private float offsetX;
+    private float offsetY;
 
     private Transform _zone;
 
@@ -52,6 +58,11 @@ public class EnemiesManager : MonoBehaviour
     {
         _zone = zone.Holder.transform;
         _zone.transform.position = transform.position;
+        float sizeX = _zone.GetChild(1).localPosition.x - _zone.GetChild(0).localPosition.x;
+        float sizeY = _zone.GetChild(10).localPosition.y - _zone.GetChild(0).localPosition.y;
+        //Debug.Log(sizeX + "   " + sizeY);
+        offsetX = sizeX;
+        offsetY = sizeY;
         for (int i = 0; i < _zone.childCount; i++)
         {
             int rnd = Random.Range(0, enemiesPool.Length);
@@ -117,6 +128,37 @@ public class EnemiesManager : MonoBehaviour
         {
             e.Shooter = true;
         }
+    }
+
+    public List<Enemy> GetEnemyAdjascent(Vector2 pos)
+    {
+        List<Enemy> rList = new List<Enemy>();
+        for (int i = 0; i < _enemiesHolder.childCount; i++)
+        {
+            float eX = _enemiesHolder.GetChild(i).transform.position.x;
+            float eY = _enemiesHolder.GetChild(i).transform.position.y;
+
+            if (Mathf.Approximately(eX, pos.x) && !Mathf.Approximately(eY, pos.y))
+            {
+                float a = eY - pos.y;
+                float b = offsetY;
+                if (Mathf.Approximately(a, b))
+                {
+                    rList.Add(_enemiesHolder.GetChild(i).GetComponent<Enemy>());
+                }
+            }
+            else if (eY == pos.y && eX != pos.x)
+            {
+                float a = Vector2.Distance(pos, new Vector2(eX, eY));
+                float b = offsetX;
+                if (Mathf.Approximately(a, b))
+                {
+                    rList.Add(_enemiesHolder.GetChild(i).GetComponent<Enemy>());
+                }
+            }
+        }
+
+        return rList;
     }
 
     public void OnEnemyKilled()

@@ -50,7 +50,7 @@ public class MouseEditor : MonoBehaviour, IPointerDownHandler
     {
         if (!Application.isEditor) return;
 
-        Debug.Log(Application.isEditor);
+        //Debug.Log(Application.isEditor);
         
     }
 
@@ -135,7 +135,7 @@ public class MouseEditor : MonoBehaviour, IPointerDownHandler
 
     void Update()
     {
-        Debug.Log(Application.isPlaying);
+        //Debug.Log(Application.isPlaying);
 
         if (!Application.isEditor) return;
 

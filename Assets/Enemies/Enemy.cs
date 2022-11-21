@@ -71,6 +71,14 @@ public class Enemy : MonoBehaviour
         life--;
         if (life <= 0)
         {
+            float rnd = Random.Range(0.0f, 100.0f);
+            if (rnd <= _data.ExplodeChancePercentage[0].chanceValue) //UPDATEME
+            {
+                foreach (Enemy e in FindObjectOfType<EnemiesManager>().GetEnemyAdjascent(transform.position))
+                {
+                    e.InstantKill();
+                }
+            }
             Destroy(gameObject);
             DeathPending = true;
             //onKill?.Invoke();
@@ -79,6 +87,16 @@ public class Enemy : MonoBehaviour
             FindObjectOfType<EnemiesManager>().OnEnemyKilled();
         }
 
+    }
+
+    public void InstantKill()
+    {
+        Destroy(gameObject);
+        DeathPending = true;
+        //onKill?.Invoke();
+        //Debug.Break();
+        FindObjectOfType<GameManager>().OnEnemyKilled();
+        FindObjectOfType<EnemiesManager>().OnEnemyKilled();
     }
 
     public void DisableComponents()
