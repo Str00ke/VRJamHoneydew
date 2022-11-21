@@ -20,6 +20,10 @@ public class Enemy : MonoBehaviour
     public bool Shooter { get; set; }
 
     public bool DeathPending { get; private set; }
+    
+    [SerializeField] Animator anim;
+
+    public Animator Anim => anim;
 
     void Awake()
     {

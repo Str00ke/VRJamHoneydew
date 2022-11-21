@@ -1953,6 +1953,7 @@ MonoBehaviour:
   enemiesPool:
   - {fileID: 6205282578419649728, guid: 962e5bdda7756f948a2cb8cb58a55012, type: 3}
   - {fileID: 6205282578419649728, guid: 8fe34495ae343ac4a964f17baaa3207c, type: 3}
+  - {fileID: 6734521026438150313, guid: e3bd4cf89b1747f49a694a6c786aeb37, type: 3}
   levelData: {fileID: 11400000, guid: 343bfeba7e747de458d0d656dc26588b, type: 2}
 --- !u!4 &1821460689
 Transform:

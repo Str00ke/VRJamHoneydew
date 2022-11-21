@@ -24,6 +24,7 @@ public class EnemiesManager : MonoBehaviour
     private Transform _zone;
 
     private Transform _enemiesHolder;
+    private List<Enemy> enemyList = new List<Enemy>();
 
     public Transform EnemiesHolder => _enemiesHolder;
 
@@ -68,6 +69,7 @@ public class EnemiesManager : MonoBehaviour
             int rnd = Random.Range(0, enemiesPool.Length);
             GameObject enemy = Instantiate(enemiesPool[rnd]);
             enemy.transform.parent = _enemiesHolder;
+            enemyList.Add(enemy.GetComponent<Enemy>());
             enemy.transform.position = _zone.GetChild(i).position;
         }
     }
@@ -86,6 +88,7 @@ public class EnemiesManager : MonoBehaviour
                 pass = true;
                 pos.y -= levelData.YOffset;
                 _enemiesHolder.GetChild(i).transform.position = pos;
+                if (enemyList[i].Anim != null) enemyList[i].Anim.Play("AlienDown");
                
             }
             else
@@ -93,6 +96,12 @@ public class EnemiesManager : MonoBehaviour
                 //Move horizontally
                 pos.x += levelData.XOffset * _currDisplace;
                 _enemiesHolder.GetChild(i).transform.position = pos;
+
+                if (enemyList[i].Anim != null)
+                {
+                    if (_currDisplace < 0) enemyList[i].Anim.Play("AlienLeft");
+                    else enemyList[i].Anim.Play("AlienRight");
+                }
             }
         }
         if (pass)
