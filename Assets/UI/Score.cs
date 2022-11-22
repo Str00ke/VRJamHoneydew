@@ -20,7 +20,7 @@ public class Score : MonoBehaviour
 
     public void ActuScore()
     {
-        scoreTxt.text = "   Score : " + score.ToString();
+        scoreTxt.text = score.ToString();
     }
 
 }
