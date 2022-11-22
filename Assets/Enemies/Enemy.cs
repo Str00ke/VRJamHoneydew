@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] Animator anim;
 
     public Animator Anim => anim;
+    
+    public GameObject score;
 
     void Awake()
     {
@@ -90,6 +92,7 @@ public class Enemy : MonoBehaviour
             FindObjectOfType<GameManager>().OnEnemyKilled();
             FindObjectOfType<EnemiesManager>().OnEnemyKilled();
             FindObjectOfType<Score>().ChangeScore(100);
+            Instantiate(score, transform.position, transform.rotation);
         }
 
     }
@@ -103,6 +106,7 @@ public class Enemy : MonoBehaviour
         FindObjectOfType<GameManager>().OnEnemyKilled();
         FindObjectOfType<EnemiesManager>().OnEnemyKilled();
         FindObjectOfType<Score>().ChangeScore(100);
+        Instantiate(score, transform.position, transform.rotation);
     }
 
     public void DisableComponents()
