@@ -1,15 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class ComboSystem : MonoBehaviour
 {
     private int actualCombo;
-    [SerializeField] private TextMeshProUGUI combo;
+    [SerializeField] private Image baseImage;
+    [SerializeField] private List<Sprite> allImages = new List<Sprite>();
+
 
     public int ActualCombo => actualCombo;
+
+    private void Start()
+    {
+        baseImage.sprite = allImages[0];
+    }
+
     public void ComboPlus()
     {
         if(actualCombo < 8) actualCombo++;
@@ -25,6 +33,6 @@ public class ComboSystem : MonoBehaviour
 
     public void ActuCombo()
     {
-        combo.text = "   Combo : " + actualCombo.ToString();
+        baseImage.sprite = allImages[actualCombo];
     }
 }
