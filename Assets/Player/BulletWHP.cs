@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,21 @@ public class BulletWHP : MonoBehaviour
     [Header("HP")]
     [SerializeField] private float maxHP;
     private float currentHP;
+    public bool isPlayer;
+    public float timeBeforeDeletion;
     #endregion
+
+    private void Start()
+    {
+        StartCoroutine(Deletion());
+    }
+
+    IEnumerator Deletion()
+    {
+        yield return new WaitForSeconds(timeBeforeDeletion);
+        if(isPlayer) FindObjectOfType<ComboSystem>().resetCombo();
+        Destroy(gameObject);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

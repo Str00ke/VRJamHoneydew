@@ -92,6 +92,7 @@ public class Enemy : MonoBehaviour
             FindObjectOfType<GameManager>().OnEnemyKilled();
             FindObjectOfType<EnemiesManager>().OnEnemyKilled();
             FindObjectOfType<Score>().ChangeScore(100);
+            FindObjectOfType<ComboSystem>().ComboPlus();
             Instantiate(score, transform.position, transform.rotation);
         }
 
@@ -106,6 +107,7 @@ public class Enemy : MonoBehaviour
         FindObjectOfType<GameManager>().OnEnemyKilled();
         FindObjectOfType<EnemiesManager>().OnEnemyKilled();
         FindObjectOfType<Score>().ChangeScore(100);
+        FindObjectOfType<ComboSystem>().ComboPlus();
         Instantiate(score, transform.position, transform.rotation);
     }
 

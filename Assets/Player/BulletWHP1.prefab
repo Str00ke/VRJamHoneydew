@@ -38724,7 +38724,6 @@ GameObject:
   - component: {fileID: 7415390574750882118}
   - component: {fileID: 8661545889525740326}
   - component: {fileID: 5122518797612733625}
-  - component: {fileID: 3221184003688239017}
   m_Layer: 6
   m_Name: BulletWHP1
   m_TagString: Untagged
@@ -38763,6 +38762,8 @@ MonoBehaviour:
   movespeed: 25
   m_ownerTag: 
   maxHP: 1
+  isPlayer: 1
+  timeBeforeDeletion: 2
 --- !u!212 &7415390574750882118
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -38862,16 +38863,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &3221184003688239017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8618449135393876617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11ce0e467a8db2745be946ee2d8268ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  time: 5

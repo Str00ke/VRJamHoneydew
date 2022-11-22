@@ -11,7 +11,10 @@ public class Score : MonoBehaviour
     
     public void ChangeScore(int addScore)
     {
-        score += addScore;
+        int multiplicator = GameObject.FindObjectOfType<ComboSystem>().ActualCombo;
+        if (multiplicator <= 0) multiplicator = 1;
+        int newScore = addScore * multiplicator;
+        score += newScore;
         ActuScore();
     }
 

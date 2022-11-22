@@ -50,6 +50,8 @@ MonoBehaviour:
   movespeed: 25
   m_ownerTag: 
   maxHP: 1
+  isPlayer: 0
+  timeBeforeDeletion: 2
 --- !u!212 &486005561257040178
 SpriteRenderer:
   m_ObjectHideFlags: 0
