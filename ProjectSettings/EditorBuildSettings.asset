@@ -8,4 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/Scenes/Charlelie.unity
+    guid: 1c99761592023a8428035e32d6ac413e
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: ca1bad3156158384b8c71a5a3014d3de,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 54c44ef9582da424b8b489df42b5cd37,
+      type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: d1f459e821aa8594e8e02b82b839bf74,
+      type: 2}
