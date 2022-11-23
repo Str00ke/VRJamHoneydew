@@ -24,8 +24,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] Animator anim;
 
     public Animator Anim => anim;
-    
-    public GameObject score;
 
     void Awake()
     {
@@ -87,13 +85,7 @@ public class Enemy : MonoBehaviour
             }
             Destroy(gameObject);
             DeathPending = true;
-            //onKill?.Invoke();
-            //Debug.Break();
-            FindObjectOfType<GameManager>().OnEnemyKilled();
-            FindObjectOfType<EnemiesManager>().OnEnemyKilled();
-            FindObjectOfType<Score>().ChangeScore(100);
-            FindObjectOfType<ComboSystem>().ComboPlus();
-            Instantiate(score, transform.position, transform.rotation);
+            OnDeath();
         }
 
     }
@@ -102,13 +94,17 @@ public class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
         DeathPending = true;
+        OnDeath();
+    }
+
+    void OnDeath()
+    {
         //onKill?.Invoke();
         //Debug.Break();
         FindObjectOfType<GameManager>().OnEnemyKilled();
         FindObjectOfType<EnemiesManager>().OnEnemyKilled();
-        FindObjectOfType<Score>().ChangeScore(100);
+        FindObjectOfType<Score>().ChangeScore(100, transform);
         FindObjectOfType<ComboSystem>().ComboPlus();
-        Instantiate(score, transform.position, transform.rotation);
     }
 
     public void DisableComponents()
