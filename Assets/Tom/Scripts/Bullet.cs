@@ -22,10 +22,11 @@ public class Bullet : MonoBehaviour
         GameObject colObj = collision.gameObject;
         if (!colObj.CompareTag(m_ownerTag))
         {
+            Debug.Log(colObj.name);
             switch (colObj.tag)
             {
                 case "Player":
-                    colObj.GetComponent<Player>().OnHit();
+                    colObj.transform.parent.GetComponent<Player>().OnHit();
                     break;
 
                 case "Enemy":
