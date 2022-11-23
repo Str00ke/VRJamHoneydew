@@ -17,5 +17,7 @@ MonoBehaviour:
   _shootTimeMin: 0.1
   _shootTimeMax: 2
   _explodeChanceMult:
+  - comboValue: 10
+    chanceValue: 20
   - comboValue: 0
     chanceValue: 20

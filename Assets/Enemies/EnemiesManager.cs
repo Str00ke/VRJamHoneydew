@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditorInternal;
+//using UnityEditor;
+//using UnityEditorInternal;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,6 +11,9 @@ public class EnemiesManager : MonoBehaviour
 {
     [SerializeField] private EnemiesZone zone;
     [SerializeField] private GameObject[] enemiesPool; //For random gen (for now)
+
+    [SerializeField] private AnimationCurve moveCurve;
+    [SerializeField] private float moveCurveSpeed;
 
     //TODO: Move this, this has nothing to do here.
     [SerializeField] private LevelData levelData;
@@ -87,14 +90,17 @@ public class EnemiesManager : MonoBehaviour
                 //descend
                 pass = true;
                 pos.y -= levelData.YOffset;
+
                 _enemiesHolder.GetChild(i).transform.position = pos;
                 if (enemyList[i].Anim != null) enemyList[i].Anim.Play("AlienDown");
                
+
             }
             else
             {
                 //Move horizontally
                 pos.x += levelData.XOffset * _currDisplace;
+
                 _enemiesHolder.GetChild(i).transform.position = pos;
 
                 if (enemyList[i].Anim != null)
@@ -102,10 +108,28 @@ public class EnemiesManager : MonoBehaviour
                     if (_currDisplace < 0) enemyList[i].Anim.Play("AlienLeft");
                     else enemyList[i].Anim.Play("AlienRight");
                 }
+
             }
+
+            StartCoroutine(MoveCor(_enemiesHolder.GetChild(i).transform, _enemiesHolder.GetChild(i).transform.position, pos, moveCurveSpeed));
         }
         if (pass)
             _currDisplace *= -1;
+    }
+
+    IEnumerator MoveCor(Transform objT, Vector2 start, Vector2 end, float speed)
+    {
+        float t = 0;
+        float y = 0;
+        while (t < 1)
+        {
+            y = moveCurve.Evaluate(t);
+            objT.position = Vector2.Lerp(start, end, t);
+            t += Time.deltaTime * speed * y;
+            yield return null;
+        }
+        transform.position = end; //Ensure position get fixed if t < 1 at while loop break
+        yield return null;
     }
 
 
