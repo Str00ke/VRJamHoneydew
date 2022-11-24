@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
 
     public Animator Anim => anim;
 
+    [SerializeField] private GameObject deathParticle;
+
     void Awake()
     {
         if (!TryGetComponent<SpriteRenderer>(out SpriteRenderer s))
@@ -83,6 +85,8 @@ public class Enemy : MonoBehaviour
                     e.InstantKill();
                 }
             }
+
+            Instantiate(deathParticle, transform.position, transform.rotation);
             Destroy(gameObject);
             DeathPending = true;
             OnDeath();
@@ -92,6 +96,7 @@ public class Enemy : MonoBehaviour
 
     public void InstantKill()
     {
+        Instantiate(deathParticle, transform.position, transform.rotation);
         Destroy(gameObject);
         DeathPending = true;
         OnDeath();

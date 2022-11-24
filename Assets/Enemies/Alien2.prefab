@@ -156,6 +156,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1714887226253765373, guid: 670b3c5f98b8928449073db933b14afa,
     type: 3}
   anim: {fileID: 7245801782711255616}
+  deathParticle: {fileID: 3852939494705439789, guid: 06dbdca83a3120a478ee4a7219915cee,
+    type: 3}
 --- !u!61 &5556828975679405291
 BoxCollider2D:
   m_ObjectHideFlags: 0
