@@ -20,6 +20,10 @@ public class Enemy : MonoBehaviour
     public bool Shooter { get; set; }
 
     public bool DeathPending { get; private set; }
+    
+    [SerializeField] Animator anim;
+
+    public Animator Anim => anim;
 
     void Awake()
     {
@@ -81,10 +85,7 @@ public class Enemy : MonoBehaviour
             }
             Destroy(gameObject);
             DeathPending = true;
-            //onKill?.Invoke();
-            //Debug.Break();
-            FindObjectOfType<GameManager>().OnEnemyKilled();
-            FindObjectOfType<EnemiesManager>().OnEnemyKilled();
+            OnDeath();
         }
 
     }
@@ -93,10 +94,17 @@ public class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
         DeathPending = true;
+        OnDeath();
+    }
+
+    void OnDeath()
+    {
         //onKill?.Invoke();
         //Debug.Break();
         FindObjectOfType<GameManager>().OnEnemyKilled();
         FindObjectOfType<EnemiesManager>().OnEnemyKilled();
+        FindObjectOfType<Score>().ChangeScore(100, transform);
+        FindObjectOfType<ComboSystem>().ComboPlus();
     }
 
     public void DisableComponents()
@@ -123,8 +131,8 @@ public class Enemy : MonoBehaviour
         GameObject go = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         //go.transform.Rotate(go.transform.position, 180f);
         //go.tag = "Enemy";
-        go.GetComponent<Bullet>().m_ownerTag = gameObject.tag;
+        go.GetComponent<BulletWHP>().m_ownerTag = gameObject.tag;
 
-        go.GetComponent<Bullet>().Direction = -Vector2.up;
+        go.GetComponent<BulletWHP>().Direction = -Vector2.up;
     }
 }
