@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        _playerCurLives = m_playerMaxLives;
     }
 
     private void Start()
