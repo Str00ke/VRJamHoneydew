@@ -17,3 +17,9 @@ MonoBehaviour:
   xOffset: 1
   yOffset: 1
   baseSpeed: 1
+  speedByNumbers:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
