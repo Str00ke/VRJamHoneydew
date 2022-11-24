@@ -18,6 +18,12 @@ public class BulletWHP : MonoBehaviour
     [Header("HP")]
     [SerializeField] private float maxHP;
     private float currentHP;
+
+    public float CurrentHp
+    {
+        get => currentHP;
+        set => currentHP = value;
+    }
     public bool isPlayer;
     public float timeBeforeDeletion;
     #endregion

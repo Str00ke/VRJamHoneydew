@@ -117,15 +117,13 @@ public class Player : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < 3; i++)
-            {
-                Vector3 pos = new Vector3(m_bulletSpawnPoint.position.x - distanceBtwShot + (distanceBtwShot * i), m_bulletSpawnPoint.position.y,
+            Vector3 pos = new Vector3(m_bulletSpawnPoint.position.x - distanceBtwShot + distanceBtwShot, m_bulletSpawnPoint.position.y,
                     m_bulletSpawnPoint.position.z);
-                GameObject bullet = Instantiate(_bullet, pos, m_bulletSpawnPoint.rotation);
-                bullet.GetComponent<BulletWHP>().m_ownerTag = gameObject.tag;
-                StartCoroutine(IShootCoolDown());
-               //shake.Shake(0.1f, 0.5f, AxisRestriction.XY, 0.15f);
-            }
+            GameObject bullet = Instantiate(_bullet, pos, m_bulletSpawnPoint.rotation);
+            bullet.GetComponent<BulletWHP>().m_ownerTag = gameObject.tag;
+            bullet.GetComponent<BulletWHP>().CurrentHp = 2;
+            StartCoroutine(IShootCoolDown());
+           //shake.Shake(0.1f, 0.5f, AxisRestriction.XY, 0.15f);
         }
 
         actualTimeToCharge = 0;
