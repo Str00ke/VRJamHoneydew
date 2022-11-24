@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     [Header("HP")] [SerializeField] private List<GameObject> listHeart = new List<GameObject>();
 
     [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private SoundTransmitter st;
 
     #endregion
 
@@ -95,10 +96,14 @@ public class GameManager : MonoBehaviour
         {
             if(i + 1 > _playerCurLives) listHeart[i].SetActive(false);
         }
-
+       
         if(_playerCurLives == 0)
         {
             Defeat();
+        }
+        else
+        {
+            st.Play("Damage");
         }
     }
 
@@ -110,6 +115,9 @@ public class GameManager : MonoBehaviour
     void Defeat()
     {
         Debug.Log("You lose");
+        st.Play("Mort");
+        st.Play("GO");
+        st.Stop("Music");
         gameOverScreen.SetActive(true);
     }
 }

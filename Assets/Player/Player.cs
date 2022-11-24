@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator anim; 
 
     private Camera cam;
+    [SerializeField] private SoundTransmitter st;
     #endregion
 
     void Start()
@@ -85,11 +86,13 @@ public class Player : MonoBehaviour
             isCharging2 = true;
             charge.Stop();
             if(PlayerPrefs.GetInt("Effect0") == 1) charged.Play();
+            st.Play("Charge0");
         }
         else if (actualTimeToCharge > minimTimeToCharge && !isCharging)
         {
             isCharging = true;
             if(PlayerPrefs.GetInt("Effect0") == 1) charge.Play();
+            st.Play("Charge1");
         }
         
     }
@@ -124,6 +127,7 @@ public class Player : MonoBehaviour
             bullet.GetComponent<BulletWHP>().CurrentHp = 2;
             StartCoroutine(IShootCoolDown());
            //shake.Shake(0.1f, 0.5f, AxisRestriction.XY, 0.15f);
+           st.Play("Charge2");
         }
 
         actualTimeToCharge = 0;
