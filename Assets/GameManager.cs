@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     float _enemySpeed;
 
     static GameManager instance;
+
+    [Header("HP")] [SerializeField] private List<GameObject> listHeart = new List<GameObject>();
+
     #endregion
 
     public static GameManager Instance
@@ -85,6 +88,11 @@ public class GameManager : MonoBehaviour
     public void PlayerHit()
     {
         _playerCurLives--;
+
+        for (int i = 0; i < listHeart.Count; i++)
+        {
+            if(i + 1 > _playerCurLives) listHeart[i].SetActive(false);
+        }
 
         if(_playerCurLives == 0)
         {

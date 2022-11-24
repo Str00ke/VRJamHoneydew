@@ -43,7 +43,7 @@ public class BulletWHP : MonoBehaviour
             switch (colObj.tag)
             {
                 case "Player":
-                    colObj.GetComponent<Player>().OnHit();
+                    colObj.transform.parent.GetComponent<Player>().OnHit();
                     break;
 
                 case "Enemy":
