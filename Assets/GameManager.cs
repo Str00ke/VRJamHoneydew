@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
 
     [Header("HP")] [SerializeField] private List<GameObject> listHeart = new List<GameObject>();
 
+    [SerializeField] private GameObject gameOverScreen;
+
     #endregion
 
     public static GameManager Instance
@@ -108,5 +110,6 @@ public class GameManager : MonoBehaviour
     void Defeat()
     {
         Debug.Log("You lose");
+        gameOverScreen.SetActive(true);
     }
 }
