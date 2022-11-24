@@ -30,6 +30,7 @@ public class BulletWHP : MonoBehaviour
 
     private void Start()
     {
+        currentHP = maxHP;
         StartCoroutine(Deletion());
     }
 

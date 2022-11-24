@@ -117,10 +117,11 @@ public class GameManager : MonoBehaviour
 
     void Defeat()
     {
+    gameOverScreen.SetActive(true);
         Debug.Log("You lose");
         st.Play("Mort");
         st.Play("GO");
         st.Stop("Music");
-        gameOverScreen.SetActive(true);
+        
     }
 }
