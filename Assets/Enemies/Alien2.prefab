@@ -133,7 +133,7 @@ Transform:
   m_GameObject: {fileID: 3364013778479516046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4371200072430508257}
@@ -156,7 +156,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1714887226253765373, guid: 670b3c5f98b8928449073db933b14afa,
     type: 3}
   anim: {fileID: 7245801782711255616}
-  score: {fileID: 6628924155170360887, guid: 0c280d92a2e04094c90f34dde10a2317, type: 3}
 --- !u!61 &5556828975679405291
 BoxCollider2D:
   m_ObjectHideFlags: 0
