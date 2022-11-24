@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     static GameManager instance;
 
     [Header("HP")] [SerializeField] private List<GameObject> listHeart = new List<GameObject>();
+    [SerializeField] private List<ParticleSystem> listHEffect = new List<ParticleSystem>();
 
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private SoundTransmitter st;
@@ -94,7 +95,9 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < listHeart.Count; i++)
         {
+            Debug.Log(i + " " + _playerCurLives);
             if(i + 1 > _playerCurLives) listHeart[i].SetActive(false);
+            if(i == _playerCurLives) listHEffect[i].Play();
         }
        
         if(_playerCurLives == 0)
