@@ -1646,7 +1646,7 @@
                 {
                     "name": "positive",
                     "id": "94fb4c5b-6fc9-4472-a4b5-b667c5567c47",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1668,7 +1668,7 @@
                 {
                     "name": "negative",
                     "id": "47a2d015-a163-47b1-9fdd-5bc7bb9edf36",
-                    "path": "<OpenVROculusTouchController>{LeftHand}/thumbstick/x",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1679,7 +1679,7 @@
                 {
                     "name": "positive",
                     "id": "6cbfe08c-0301-4613-91b1-41980f46d592",
-                    "path": "<OpenVROculusTouchController>{LeftHand}/thumbstick/x",
+                    "path": "<XRController>{RightHand}/triggerPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
