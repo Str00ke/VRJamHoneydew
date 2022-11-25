@@ -91,7 +91,7 @@ public class EnemiesManager : MonoBehaviour
                 pass = true;
                 pos.y -= levelData.YOffset;
 
-                _enemiesHolder.GetChild(i).transform.position = pos;
+                //_enemiesHolder.GetChild(i).transform.position = pos;
                 if (enemyList[i].Anim != null) enemyList[i].Anim.Play("AlienDown");
                
 
@@ -101,7 +101,7 @@ public class EnemiesManager : MonoBehaviour
                 //Move horizontally
                 pos.x += levelData.XOffset * _currDisplace;
 
-                _enemiesHolder.GetChild(i).transform.position = pos;
+                //_enemiesHolder.GetChild(i).transform.position = pos;
 
                 if (enemyList[i].Anim != null)
                 {

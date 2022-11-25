@@ -1,6 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
+using CommonUsages = UnityEngine.InputSystem.CommonUsages;
 
 public class Player : MonoBehaviour
 {
@@ -34,8 +39,28 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator anim; 
 
     private Camera cam;
-    [SerializeField] private SoundTransmitter st;
+
+    [Header("Inputs")]
+    [Header("Keyboard")]
+    [SerializeField] private InputActionProperty moveKey;
+    [SerializeField] private InputActionProperty shootKey;
+
+    [Header("Joystick")]
+    [SerializeField] private InputActionProperty moveStick;
+    [SerializeField] private InputActionProperty shootTrigger;
+
+    [Header("HMD")]
+    [SerializeField] private InputActionProperty moveOculus;
+    [SerializeField] private InputActionProperty shootOculus;
+    [SerializeField] private InputAction test;
     #endregion
+
+    void Awake()
+    {
+        moveKey.action.performed += MoveInput;
+        moveStick.action.performed += MoveInput;
+        moveOculus.action.performed += MoveInput;
+    }
 
     void Start()
     {
@@ -43,31 +68,26 @@ public class Player : MonoBehaviour
         cam = Camera.main;
     }
 
+    void OnDisable()
+    {
+        moveKey.action.performed -= MoveInput;
+        moveStick.action.performed -= MoveInput;
+        moveOculus.action.performed -= MoveInput;
+    }
+
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-        {
-            Move(-transform.right);
-            anim.SetBool("IsRight", false);
-            anim.SetBool("IsLeft", true);
-            anim.SetBool("IsIdle", false);
-        }
-        if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
-        {
-            Move(transform.right);
-            anim.SetBool("IsRight", true);
-            anim.SetBool("IsLeft", false);
-            anim.SetBool("IsIdle", false);
-        }
-        if(!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
-        {
-            anim.SetBool("IsRight",false);
-            anim.SetBool("IsLeft", false);
-            anim.SetBool("IsIdle", true);
-        }
 
-        if (Input.GetKey(KeyCode.Space))
+        //UnityEngine.XR.InputDevice vecKey = InputDevices.GetDeviceAtXRNode(test);
+        //Vector2 t;
+        // c;
+        //vecKey.TryGetFeatureValue(CommonUsages.SecondaryTrigger, out c)
+        float vecKey = moveOculus.action.ReadValue<float>();
+        Debug.Log(vecKey);
+        if (shootKey.action.WasPressedThisFrame() | shootTrigger.action.WasPressedThisFrame() | shootOculus.action.WasPressedThisFrame())
         {
+            Debug.Log("Press");
+
             if (_canShoot)
             {
                 Charge();
@@ -76,7 +96,7 @@ public class Player : MonoBehaviour
             {
                 //Shoot CD feedback;
             }
-        }else if (Input.GetKeyUp(KeyCode.Space))
+        }else if (shootKey.action.WasReleasedThisFrame() | shootTrigger.action.WasReleasedThisFrame() | shootOculus.action.WasReleasedThisFrame())
         {
             if (_canShoot) Preshoot();
         }
@@ -86,21 +106,50 @@ public class Player : MonoBehaviour
             isCharging2 = true;
             charge.Stop();
             if(PlayerPrefs.GetInt("Effect0") == 1) charged.Play();
-            st.Play("Charge0");
         }
         else if (actualTimeToCharge > minimTimeToCharge && !isCharging)
         {
             isCharging = true;
             if(PlayerPrefs.GetInt("Effect0") == 1) charge.Play();
-            st.Play("Charge1");
         }
         
     }
 
-    void Move(Vector2 Dir)
+    void MoveInput(InputAction.CallbackContext ctx)
     {
-        if(isCharging || isCharging2) gameObject.transform.Translate(Dir * (m_movementSpeed * dividedSpeed) * Time.deltaTime);
-        else gameObject.transform.Translate(Dir * m_movementSpeed * Time.deltaTime);
+        float vecKey = moveKey.action.ReadValue<float>();
+        float vecJoy = moveStick.action.ReadValue<float>();
+        float vecVR = moveOculus.action.ReadValue<float>();
+
+        if (vecKey != 0)
+            Move(vecKey);
+        else if (vecVR != 0)
+            Move(vecJoy);
+    }
+
+    void Move(float Dir)
+    {
+        if (Dir == -1)
+        {
+            anim.SetBool("IsRight", false);
+            anim.SetBool("IsLeft", true);
+            anim.SetBool("IsIdle", false);
+        }
+        else if (Dir == 1)
+        {
+            anim.SetBool("IsRight", true);
+            anim.SetBool("IsLeft", false);
+            anim.SetBool("IsIdle", false);
+        }
+        else if (Dir == 0)
+        {
+            anim.SetBool("IsRight", false);
+            anim.SetBool("IsLeft", false);
+            anim.SetBool("IsIdle", true);
+        }
+
+        if (isCharging || isCharging2) gameObject.transform.Translate(new Vector2(Dir, 0) * (m_movementSpeed * dividedSpeed) * Time.deltaTime);
+        else gameObject.transform.Translate(new Vector2(Dir, 0)* m_movementSpeed * Time.deltaTime);
     }
 
     void Preshoot()
@@ -120,14 +169,15 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Vector3 pos = new Vector3(m_bulletSpawnPoint.position.x - distanceBtwShot + distanceBtwShot, m_bulletSpawnPoint.position.y,
+            for (int i = 0; i < 3; i++)
+            {
+                Vector3 pos = new Vector3(m_bulletSpawnPoint.position.x - distanceBtwShot + (distanceBtwShot * i), m_bulletSpawnPoint.position.y,
                     m_bulletSpawnPoint.position.z);
-            GameObject bullet = Instantiate(_bullet, pos, m_bulletSpawnPoint.rotation);
-            bullet.GetComponent<BulletWHP>().m_ownerTag = gameObject.tag;
-            bullet.GetComponent<BulletWHP>().CurrentHp = 2;
-            StartCoroutine(IShootCoolDown());
-           //shake.Shake(0.1f, 0.5f, AxisRestriction.XY, 0.15f);
-           st.Play("Charge2");
+                GameObject bullet = Instantiate(_bullet, pos, m_bulletSpawnPoint.rotation);
+                bullet.GetComponent<BulletWHP>().m_ownerTag = gameObject.tag;
+                StartCoroutine(IShootCoolDown());
+               //shake.Shake(0.1f, 0.5f, AxisRestriction.XY, 0.15f);
+            }
         }
 
         actualTimeToCharge = 0;
