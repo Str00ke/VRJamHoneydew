@@ -59,6 +59,7 @@ public class BulletWHP : MonoBehaviour
             }
 
             HPCheck();
+            Explode();
         }
     }
 

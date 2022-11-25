@@ -1712,7 +1712,7 @@
                 {
                     "name": "",
                     "id": "db4a3903-f4cd-48ae-9fc0-9731bc5dbaac",
-                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "path": "<XRController>{RightHand}/joystickClicked",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

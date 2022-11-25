@@ -124,4 +124,14 @@ public class GameManager : MonoBehaviour
         st.Stop("Music");
         
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void Replay()
+    {
+
+    }
 }

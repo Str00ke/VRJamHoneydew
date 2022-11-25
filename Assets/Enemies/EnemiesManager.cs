@@ -119,6 +119,7 @@ public class EnemiesManager : MonoBehaviour
 
     IEnumerator MoveCor(Transform objT, Vector2 start, Vector2 end, float speed)
     {
+        Debug.Log("Hello");
         float t = 0;
         float y = 0;
         while (t < 1)

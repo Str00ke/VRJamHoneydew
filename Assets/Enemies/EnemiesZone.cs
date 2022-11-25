@@ -73,8 +73,8 @@ public class EnemiesZone : MonoBehaviour
                 go.transform.position = pos;
 
 
-                var iconContent = EditorGUIUtility.IconContent("blendKey");
-                EditorGUIUtility.SetIconForObject(go, (Texture2D)iconContent.image);
+                //var iconContent = EditorGUIUtility.IconContent("blendKey");
+                //EditorGUIUtility.SetIconForObject(go, (Texture2D)iconContent.image);
 
                 ++index;
                 pos.x += sizeX;

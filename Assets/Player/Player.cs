@@ -53,6 +53,12 @@ public class Player : MonoBehaviour
     [SerializeField] private InputActionProperty moveOculus;
     [SerializeField] private InputActionProperty shootOculus;
     [SerializeField] private InputAction test;
+
+    [SerializeField] private GameObject righth;
+
+    private ProjectOnPlane plane;
+
+    private Vector3 v;
     #endregion
 
     void Awake()
@@ -67,6 +73,9 @@ public class Player : MonoBehaviour
     {
         _gameManager = GameManager.Instance;
         cam = Camera.main;
+        plane = FindObjectOfType<ProjectOnPlane>();
+
+
     }
     void OnDisable()
     {
@@ -79,21 +88,30 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        //UnityEngine.XR.InputDevice vecKey = InputDevices.GetDeviceAtXRNode(test);
+
+        //RaycastHit hit;
+        //righth.GetComponent<XRRayInteractor>().TryGetCurrent3DRaycastHit(out hit);
+        //Debug.Log(hit.transform.gameObject.name);
+        v = plane.BoundedHitPosition;
+            //UnityEngine.XR.InputDevice vecKey = InputDevices.GetDeviceAtXRNode(test);
         //Vector2 t;
         // c;
         //vecKey.TryGetFeatureValue(CommonUsages.SecondaryTrigger, out c)
         float vecKey = moveOculus.action.ReadValue<float>();
-        Debug.Log(vecKey);
         if (moveOculus.action.IsPressed())
         {
             float vecVR = moveOculus.action.ReadValue<float>();
             Move(vecVR);
         }
 
-        if (shootKey.action.WasPressedThisFrame() | shootTrigger.action.WasPressedThisFrame() | shootOculus.action.WasPressedThisFrame())
+        if (shootOculus.action.WasPressedThisFrame())
         {
-            Debug.Log("Press");
+            Debug.Log("SHOOOt");
+
+        }
+
+        if (shootKey.action.IsPressed() | shootTrigger.action.IsPressed() | shootOculus.action.IsPressed())
+        {
 
             if (_canShoot)
             {
@@ -113,12 +131,14 @@ public class Player : MonoBehaviour
         {
             isCharging2 = true;
             charge.Stop();
-            if (PlayerPrefs.GetInt("Effect0") == 1) charged.Play();
+            charged.Play();
+            //if (PlayerPrefs.GetInt("Effect0") == 1) 
         }
         else if (actualTimeToCharge > minimTimeToCharge && !isCharging)
         {
             isCharging = true;
-            if (PlayerPrefs.GetInt("Effect0") == 1) charge.Play();
+            charge.Play();
+            //if (PlayerPrefs.GetInt("Effect0") == 1) 
         }
 
     }
@@ -168,13 +188,20 @@ public class Player : MonoBehaviour
         else Shoot(m_bulletPrefab);
     }
 
+    void ShootO(GameObject _bullet)
+    {
+
+    }
+
     void Shoot(GameObject _bullet)
     {
+        Debug.Log("shoot");
         if (actualTimeToCharge < timeToCharge)
         {
-            GameObject bullet = Instantiate(_bullet, m_bulletSpawnPoint.position, m_bulletSpawnPoint.rotation);
+            GameObject bullet = Instantiate(_bullet, m_bulletSpawnPoint.position/*transform.position*/, m_bulletSpawnPoint.rotation);
             bullet.GetComponent<BulletWHP>().m_ownerTag = gameObject.tag;
             StartCoroutine(IShootCoolDown());
+            //bullet.GetComponent<BulletWHP>().Direction = transform.position - v;
             //shake.Shake(0.1f, 0.5f, AxisRestriction.XY, 0.15f);
         }
         else
