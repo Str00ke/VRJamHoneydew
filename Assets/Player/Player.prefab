@@ -65,6 +65,117 @@ MonoBehaviour:
   charged: {fileID: 1732525759167964322}
   anim: {fileID: 6342196865178086851}
   st: {fileID: 0}
+  moveKey:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Move Key
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 3a004609-4754-48a8-99cc-9ece91c92cc2
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -3917952068600110450, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  shootKey:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Shoot Key
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: d49aff39-2f42-4911-b7dd-c275db8e7924
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -8348530083721342768, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  moveStick:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Move Stick
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 6306b1f7-ca0d-4483-94c4-bef20cd8bd50
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -3917952068600110450, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  shootTrigger:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Shoot Trigger
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: d64461a7-d7db-4f71-be9c-bf386b4567ba
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -8348530083721342768, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  moveOculus:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Move Oculus
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 734ee2b7-70d5-435d-8870-90e5fc8cfccf
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -3917952068600110450, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  shootOculus:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Shoot Oculus
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 67252765-4fc2-4d80-a6c6-4652177634fc
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -8348530083721342768, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  test:
+    m_Name: Test
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e7e30bbe-5423-4783-857e-35e3f9e3ce64
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 1D Axis
+      m_Id: 10c81865-dcd5-42eb-9dce-f89336ac4317
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Test
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: cc9ed614-c2b5-466b-a3d6-b0fd62b4b3b8
+      m_Path: <XRController>{LeftHand}/triggerPressed
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Test
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: b3c59e2a-fc90-4d88-a168-2ef5a807c892
+      m_Path: <XRController>{RightHand}/triggerPressed
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Test
+      m_Flags: 8
+    m_Flags: 0
 --- !u!114 &1960643959
 MonoBehaviour:
   m_ObjectHideFlags: 0
